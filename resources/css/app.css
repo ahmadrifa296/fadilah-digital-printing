@@ -1,0 +1,759 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   FADILAH PRINTING — DESIGN SYSTEM
+   Versi: 2.0  |  Framework: Tailwind CSS v3
+   Terinspirasi: Vercel, Linear, Stripe Dashboard, Filament
+   ============================================================ */
+
+/* ============================================================
+   BASE LAYER — Reset & Typography
+   ============================================================ */
+@layer base {
+    :root {
+        /* Design tokens sebagai CSS custom properties */
+        --color-primary:    #2563eb;
+        --color-primary-dk: #1d4ed8;
+        --color-surface:    #f8fafc;
+        --color-border:     #e2e8f0;
+        --color-text:       #0f172a;
+        --color-muted:      #64748b;
+        --radius-card:      1rem;
+        --shadow-card:      0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+    }
+
+    html {
+        @apply antialiased scroll-smooth;
+        font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    body {
+        @apply bg-surface-50 text-surface-900 text-sm;
+        font-family: 'Inter', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    /* Scrollbar minimal */
+    ::-webkit-scrollbar       { @apply w-1.5 h-1.5; }
+    ::-webkit-scrollbar-track { @apply bg-transparent; }
+    ::-webkit-scrollbar-thumb { @apply bg-surface-300 rounded-full hover:bg-surface-400 transition-colors; }
+
+    /* Seleksi teks */
+    ::selection { @apply bg-primary-100 text-primary-900; }
+
+    /* Focus ring global — konsisten */
+    *:focus-visible {
+        @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-white;
+    }
+
+    /* Typography scale */
+    h1 { @apply text-2xl font-bold tracking-tight text-surface-900; }
+    h2 { @apply text-xl  font-semibold tracking-tight text-surface-900; }
+    h3 { @apply text-base font-semibold text-surface-800; }
+    h4 { @apply text-sm  font-semibold text-surface-700; }
+
+    /* Link global */
+    a { @apply transition-colors duration-150; }
+}
+
+/* ============================================================
+   COMPONENT LAYER — Reusable UI Components
+   ============================================================ */
+@layer components {
+
+    /* ----------------------------------------------------------
+       LAYOUT — Sidebar-based app shell
+       ---------------------------------------------------------- */
+    .app-shell {
+        @apply min-h-screen bg-surface-50;
+    }
+
+    .app-sidebar {
+        @apply fixed inset-y-0 left-0 z-50 w-64 bg-surface-900 flex flex-col
+               border-r border-surface-800 transition-transform duration-300;
+    }
+
+    .app-topbar {
+        @apply sticky top-0 z-40 h-14 bg-white/80 backdrop-blur-md
+               border-b border-surface-200 flex items-center px-6 gap-4;
+    }
+
+    .app-content {
+        @apply ml-64 flex-1 p-6;
+    }
+
+    /* ----------------------------------------------------------
+       CARD — Komponen kartu utama
+       ---------------------------------------------------------- */
+    .card {
+        @apply bg-white border border-surface-200 rounded-xl shadow-card;
+    }
+
+    .card-header {
+        @apply px-6 py-4 border-b border-surface-100 flex items-center justify-between;
+    }
+
+    .card-body {
+        @apply px-6 py-5;
+    }
+
+    .card-footer {
+        @apply px-6 py-4 border-t border-surface-100 bg-surface-50 rounded-b-xl;
+    }
+
+    /* Card hover effect */
+    .card-hover {
+        @apply card transition-all duration-200
+               hover:shadow-card-md hover:-translate-y-0.5 cursor-pointer;
+    }
+
+    /* Stat card */
+    .stat-card {
+        @apply card px-6 py-5 flex items-start gap-4;
+    }
+
+    .stat-card-icon {
+        @apply w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0;
+    }
+
+    /* ----------------------------------------------------------
+       BUTTON — Semua varian tombol
+       ---------------------------------------------------------- */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2
+               rounded-lg text-sm font-semibold
+               transition-all duration-150 ease-smooth
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+               disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none
+               select-none active:scale-[0.98];
+    }
+
+    /* Size variants */
+    .btn-xs  { @apply btn h-7  px-2.5 text-xs rounded-md; }
+    .btn-sm  { @apply btn h-8  px-3   text-xs; }
+    .btn-md  { @apply btn h-9  px-4; }
+    .btn-lg  { @apply btn h-10 px-5   text-base; }
+    .btn-xl  { @apply btn h-11 px-6   text-base; }
+
+    /* Color variants */
+    .btn-primary {
+        @apply bg-primary-600 text-white hover:bg-primary-700
+               focus-visible:ring-primary-500 shadow-sm;
+    }
+
+    .btn-secondary {
+        @apply bg-white text-surface-700 border border-surface-300
+               hover:bg-surface-50 hover:border-surface-400
+               focus-visible:ring-surface-400 shadow-sm;
+    }
+
+    .btn-ghost {
+        @apply text-surface-600 hover:bg-surface-100 hover:text-surface-900
+               focus-visible:ring-surface-400;
+    }
+
+    .btn-danger {
+        @apply bg-danger-600 text-white hover:bg-danger-700
+               focus-visible:ring-danger-500 shadow-sm;
+    }
+
+    .btn-success {
+        @apply bg-success-600 text-white hover:bg-success-700
+               focus-visible:ring-success-500 shadow-sm;
+    }
+
+    .btn-warning {
+        @apply bg-warning-500 text-white hover:bg-warning-600
+               focus-visible:ring-warning-500 shadow-sm;
+    }
+
+    /* Icon-only button */
+    .btn-icon {
+        @apply btn h-9 w-9 p-0 rounded-lg;
+    }
+
+    .btn-icon-sm {
+        @apply btn h-7 w-7 p-0 rounded-md;
+    }
+
+    /* ----------------------------------------------------------
+       FORM INPUT — Field, Label, Error
+       ---------------------------------------------------------- */
+    .form-group {
+        @apply flex flex-col gap-1.5;
+    }
+
+    .form-label {
+        @apply text-sm font-medium text-surface-700;
+    }
+
+    .form-label-required::after {
+        content: '*';
+        @apply text-danger-500 ml-0.5;
+    }
+
+    .form-input {
+        @apply w-full rounded-lg border border-surface-300 bg-white
+               px-3.5 py-2.5 text-sm text-surface-900 placeholder-surface-400
+               transition-all duration-150
+               focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20
+               focus:outline-none
+               disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed;
+    }
+
+    .form-input-error {
+        @apply form-input border-danger-500
+               focus:border-danger-600 focus:ring-2 focus:ring-danger-600/20;
+    }
+
+    .form-textarea {
+        @apply form-input resize-none;
+    }
+
+    .form-select {
+        @apply form-input pr-10 cursor-pointer;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.625rem center;
+        background-repeat: no-repeat;
+        background-size: 1.25em 1.25em;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .form-hint {
+        @apply text-xs text-surface-400 leading-relaxed;
+    }
+
+    .form-error {
+        @apply text-xs text-danger-600 flex items-center gap-1;
+    }
+
+    /* File upload zone */
+    .upload-zone {
+        @apply border-2 border-dashed border-surface-300 rounded-xl
+               p-8 text-center cursor-pointer transition-all duration-200
+               hover:border-primary-400 hover:bg-primary-50/30;
+    }
+
+    .upload-zone-active {
+        @apply border-primary-500 bg-primary-50/50;
+    }
+
+    /* Search input */
+    .search-input {
+        @apply form-input pl-9;
+    }
+
+    /* ----------------------------------------------------------
+       BADGE — Status indicators
+       ---------------------------------------------------------- */
+    .badge {
+        @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full
+               text-2xs font-semibold whitespace-nowrap leading-4;
+    }
+
+    .badge-sm {
+        @apply badge text-xs px-2.5 py-1;
+    }
+
+    .badge-dot {
+        @apply w-1.5 h-1.5 rounded-full flex-shrink-0;
+    }
+
+    /* Badge variants */
+    .badge-primary  { @apply badge bg-primary-100 text-primary-700; }
+    .badge-success  { @apply badge bg-success-100 text-success-700; }
+    .badge-warning  { @apply badge bg-warning-100 text-warning-700; }
+    .badge-danger   { @apply badge bg-danger-100  text-danger-700; }
+    .badge-info     { @apply badge bg-info-100    text-info-700; }
+    .badge-neutral  { @apply badge bg-surface-100 text-surface-600; }
+    .badge-outline  { @apply badge border border-current bg-transparent; }
+
+    /* Status badge besar */
+    .status-badge    { @apply badge-sm; }
+    .status-pending  { @apply status-badge bg-warning-100 text-warning-700; }
+    .status-process  { @apply status-badge bg-primary-100 text-primary-700; }
+    .status-done     { @apply status-badge bg-success-100 text-success-700; }
+    .status-canceled { @apply status-badge bg-danger-100  text-danger-700; }
+    .status-paid     { @apply status-badge bg-success-100 text-success-700; }
+    .status-unpaid   { @apply status-badge bg-warning-100 text-warning-700; }
+    .status-failed   { @apply status-badge bg-danger-100  text-danger-700; }
+    .status-expired  { @apply status-badge bg-surface-100 text-surface-500; }
+
+    /* ----------------------------------------------------------
+       ALERT / NOTIFICATION BANNER
+       ---------------------------------------------------------- */
+    .alert {
+        @apply flex items-start gap-3 px-4 py-3.5 rounded-xl text-sm font-medium border;
+    }
+
+    .alert-icon {
+        @apply w-5 h-5 flex-shrink-0 mt-0.5;
+    }
+
+    .alert-success {
+        @apply alert bg-success-50 text-success-700 border-success-200;
+    }
+
+    .alert-warning {
+        @apply alert bg-warning-50 text-warning-700 border-warning-200;
+    }
+
+    .alert-danger {
+        @apply alert bg-danger-50 text-danger-700 border-danger-200;
+    }
+
+    .alert-info {
+        @apply alert bg-info-50 text-info-700 border-info-500/20;
+    }
+
+    .alert-neutral {
+        @apply alert bg-surface-50 text-surface-700 border-surface-200;
+    }
+
+    /* ----------------------------------------------------------
+       TABLE — Modern data table
+       ---------------------------------------------------------- */
+    .table-wrapper {
+        @apply overflow-x-auto;
+    }
+
+    .table {
+        @apply w-full text-sm text-left;
+    }
+
+    .table thead {
+        @apply bg-surface-50 border-y border-surface-200;
+    }
+
+    .table thead th {
+        @apply px-4 py-3 text-xs font-semibold uppercase tracking-wider
+               text-surface-500 whitespace-nowrap select-none;
+    }
+
+    .table tbody tr {
+        @apply border-b border-surface-100 transition-colors duration-100;
+    }
+
+    .table tbody tr:last-child {
+        @apply border-b-0;
+    }
+
+    .table tbody tr:hover {
+        @apply bg-surface-50/70;
+    }
+
+    .table tbody td {
+        @apply px-4 py-3.5 text-surface-700 align-middle;
+    }
+
+    /* Sticky header */
+    .table-sticky thead {
+        @apply sticky top-0 z-10;
+    }
+
+    /* ----------------------------------------------------------
+       PAGINATION — Modern pagination
+       ---------------------------------------------------------- */
+    .pagination {
+        @apply flex items-center gap-1;
+    }
+
+    .page-btn {
+        @apply inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm
+               font-medium text-surface-600 hover:bg-surface-100 hover:text-surface-900
+               transition-colors duration-150;
+    }
+
+    .page-btn-active {
+        @apply page-btn bg-primary-600 text-white hover:bg-primary-700;
+    }
+
+    /* ----------------------------------------------------------
+       NAVIGATION — Sidebar nav items
+       ---------------------------------------------------------- */
+    .nav-item {
+        @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium
+               text-surface-400 hover:bg-surface-800 hover:text-white
+               transition-all duration-150;
+    }
+
+    .nav-item-active {
+        @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium
+               bg-surface-800 text-white transition-all duration-150;
+    }
+
+    .nav-item-icon {
+        @apply w-5 h-5 flex-shrink-0;
+    }
+
+    .nav-section-title {
+        @apply px-3 py-2 text-2xs font-bold uppercase tracking-widest text-surface-600;
+    }
+
+    /* ----------------------------------------------------------
+       AVATAR — User avatar
+       ---------------------------------------------------------- */
+    .avatar {
+        @apply rounded-full flex items-center justify-center
+               font-semibold text-sm flex-shrink-0 overflow-hidden;
+    }
+
+    .avatar-sm  { @apply avatar w-7  h-7  text-xs; }
+    .avatar-md  { @apply avatar w-9  h-9  text-sm; }
+    .avatar-lg  { @apply avatar w-11 h-11 text-base; }
+    .avatar-xl  { @apply avatar w-14 h-14 text-lg; }
+
+    /* ----------------------------------------------------------
+       EMPTY STATE
+       ---------------------------------------------------------- */
+    .empty-state {
+        @apply flex flex-col items-center justify-center py-16 px-8 text-center;
+    }
+
+    .empty-state-icon {
+        @apply w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center
+               text-surface-400 mb-4;
+    }
+
+    /* ----------------------------------------------------------
+       SKELETON LOADER
+       ---------------------------------------------------------- */
+    .skeleton {
+        @apply bg-surface-200 rounded animate-pulse;
+    }
+
+    .skeleton-text  { @apply skeleton h-4 rounded; }
+    .skeleton-title { @apply skeleton h-6 rounded w-1/3; }
+    .skeleton-card  { @apply skeleton h-32 rounded-xl; }
+
+    /* ----------------------------------------------------------
+       DROPDOWN MENU
+       ---------------------------------------------------------- */
+    .dropdown-menu {
+        @apply absolute z-50 mt-1 min-w-48 bg-white border border-surface-200
+               rounded-xl shadow-card-lg py-1 animate-scale-in origin-top-right;
+    }
+
+    .dropdown-item {
+        @apply flex items-center gap-2.5 px-3.5 py-2 text-sm text-surface-700
+               hover:bg-surface-50 hover:text-surface-900 transition-colors duration-100
+               cursor-pointer mx-1 rounded-lg;
+    }
+
+    .dropdown-divider {
+        @apply border-t border-surface-100 my-1;
+    }
+
+    /* ----------------------------------------------------------
+       MODAL
+       ---------------------------------------------------------- */
+    .modal-overlay {
+        @apply fixed inset-0 z-50 flex items-center justify-center
+               bg-surface-900/50 backdrop-blur-sm p-4 animate-fade-in;
+    }
+
+    .modal-panel {
+        @apply bg-white rounded-2xl shadow-card-lg w-full max-w-md
+               animate-scale-in;
+    }
+
+    .modal-header {
+        @apply px-6 pt-6 pb-4 flex items-start justify-between;
+    }
+
+    .modal-body {
+        @apply px-6 py-2;
+    }
+
+    .modal-footer {
+        @apply px-6 py-4 flex items-center justify-end gap-3
+               border-t border-surface-100 mt-4;
+    }
+
+    /* ----------------------------------------------------------
+       DIVIDER
+       ---------------------------------------------------------- */
+    .divider {
+        @apply border-t border-surface-200;
+    }
+
+    .divider-text {
+        @apply flex items-center gap-3 text-xs text-surface-400;
+    }
+
+    .divider-text::before,
+    .divider-text::after {
+        content: '';
+        @apply flex-1 border-t border-surface-200;
+    }
+
+    /* ----------------------------------------------------------
+       TOOLTIP
+       ---------------------------------------------------------- */
+    [data-tooltip] {
+        @apply relative;
+    }
+
+    [data-tooltip]::after {
+        content: attr(data-tooltip);
+        @apply absolute bottom-full left-1/2 -translate-x-1/2 mb-2
+               px-2.5 py-1.5 bg-surface-900 text-white text-xs rounded-lg
+               whitespace-nowrap pointer-events-none opacity-0 transition-opacity duration-150
+               z-50;
+    }
+
+    [data-tooltip]:hover::after {
+        @apply opacity-100;
+    }
+
+    /* ----------------------------------------------------------
+       PROGRESS BAR
+       ---------------------------------------------------------- */
+    .progress {
+        @apply w-full bg-surface-200 rounded-full overflow-hidden;
+    }
+
+    .progress-bar {
+        @apply h-full bg-primary-600 rounded-full transition-all duration-500;
+    }
+
+    /* ----------------------------------------------------------
+       SWITCH / TOGGLE
+       ---------------------------------------------------------- */
+    .toggle {
+        @apply relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer
+               rounded-full border-2 border-transparent transition-colors duration-200
+               focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500
+               focus-visible:ring-offset-2;
+    }
+
+    /* ----------------------------------------------------------
+       GLASSMORPHISM (ringan, hanya dekoratif)
+       ---------------------------------------------------------- */
+    .glass {
+        @apply bg-white/70 backdrop-blur-md border border-white/50;
+    }
+
+    .glass-dark {
+        @apply bg-surface-900/80 backdrop-blur-md border border-surface-700/50;
+    }
+
+    /* ----------------------------------------------------------
+       GRADIENT UTILITIES
+       ---------------------------------------------------------- */
+    .gradient-brand {
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    }
+
+    .gradient-surface {
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .gradient-text {
+        @apply bg-gradient-to-r from-primary-600 to-primary-400
+               bg-clip-text text-transparent;
+    }
+
+    /* ----------------------------------------------------------
+       SECTION / PAGE HEADER
+       ---------------------------------------------------------- */
+    .page-header {
+        @apply flex flex-col sm:flex-row sm:items-center sm:justify-between
+               gap-4 mb-6;
+    }
+
+    .page-title {
+        @apply text-xl font-bold text-surface-900;
+    }
+
+    .page-subtitle {
+        @apply text-sm text-surface-500 mt-0.5;
+    }
+
+    /* ----------------------------------------------------------
+       SIDEBAR NAVIGATION
+       ---------------------------------------------------------- */
+    .sidebar-logo {
+        @apply flex items-center gap-3 px-5 py-4 border-b border-surface-800;
+    }
+
+    .sidebar-logo-icon {
+        @apply w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center
+               text-white font-bold text-sm flex-shrink-0;
+    }
+
+    .sidebar-nav {
+        @apply flex-1 overflow-y-auto py-4 px-3 space-y-0.5;
+    }
+
+    .sidebar-footer {
+        @apply border-t border-surface-800 p-3;
+    }
+
+    /* ----------------------------------------------------------
+       TOPBAR
+       ---------------------------------------------------------- */
+    .topbar-breadcrumb {
+        @apply text-sm text-surface-500;
+    }
+
+    .topbar-breadcrumb span {
+        @apply text-surface-400 mx-2;
+    }
+
+    .topbar-breadcrumb a {
+        @apply hover:text-surface-700 transition-colors;
+    }
+
+    /* ----------------------------------------------------------
+       FILTER / SEARCH BAR
+       ---------------------------------------------------------- */
+    .filter-bar {
+        @apply flex flex-wrap items-center gap-3 p-4
+               border-b border-surface-100;
+    }
+
+    .filter-tag {
+        @apply flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium
+               bg-primary-50 text-primary-700 border border-primary-200;
+    }
+
+    /* ----------------------------------------------------------
+       LOADING SPINNER
+       ---------------------------------------------------------- */
+    .spinner {
+        @apply inline-block w-4 h-4 border-2 border-current border-r-transparent
+               rounded-full animate-spin;
+    }
+
+    .spinner-lg {
+        @apply inline-block w-8 h-8 border-[3px] border-primary-200 border-t-primary-600
+               rounded-full animate-spin;
+    }
+
+    /* ----------------------------------------------------------
+       INVOICE / PRINT
+       ---------------------------------------------------------- */
+    @media print {
+        .no-print { display: none !important; }
+        .print-only { display: block !important; }
+        body { background: white; font-size: 11pt; }
+        .card { box-shadow: none; border: 1px solid #e2e8f0; }
+    }
+
+    /* ----------------------------------------------------------
+       ADMIN BRANDING & COMPONENT EXTENSIONS
+       ---------------------------------------------------------- */
+    .admin-card {
+        @apply bg-white rounded-2xl border border-slate-200/80 shadow-xs transition-all duration-200;
+    }
+    
+    .admin-card-hover {
+        @apply admin-card hover:shadow-sm hover:border-slate-300 hover:-translate-y-0.5;
+    }
+
+    .admin-pill-tab {
+        @apply px-3.5 py-1.5 text-[11px] rounded-xl font-bold cursor-pointer transition-all duration-150 flex items-center gap-1.5 select-none;
+    }
+
+    .admin-pill-tab-active {
+        @apply bg-orange-500 text-white font-extrabold shadow-2xs;
+    }
+
+    .admin-pill-tab-inactive {
+        @apply text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 font-semibold;
+    }
+
+    .admin-stat-card {
+        @apply bg-white rounded-2xl border border-slate-200/80 p-3.5 shadow-2xs hover:shadow-xs transition-all duration-200 flex flex-col justify-between overflow-hidden relative;
+    }
+
+    .admin-badge {
+        @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border;
+    }
+
+    .admin-badge-pending {
+        @apply bg-amber-50 text-amber-700 border-amber-200/80;
+    }
+
+    .admin-badge-approved, .admin-badge-success {
+        @apply bg-emerald-50 text-emerald-700 border-emerald-200/80;
+    }
+
+    .admin-badge-rejected, .admin-badge-danger {
+        @apply bg-rose-50 text-rose-700 border-rose-200/80;
+    }
+
+    .admin-badge-info, .admin-badge-blue {
+        @apply bg-sky-50 text-sky-700 border-sky-200/80;
+    }
+
+    .admin-badge-neutral {
+        @apply bg-slate-100 text-slate-700 border-slate-200;
+    }
+
+    .btn-brand-orange {
+        @apply bg-orange-500 hover:bg-orange-600 text-white font-extrabold shadow-2xs active:scale-[0.98] transition-all text-xs px-3.5 py-1.5 rounded-xl;
+    }
+
+    .btn-brand-navy {
+        @apply bg-slate-900 hover:bg-slate-800 text-white font-extrabold shadow-2xs active:scale-[0.98] transition-all text-xs px-3.5 py-1.5 rounded-xl;
+    }
+
+    /* COMPACT LAPTOP TABLE STYLING */
+    .table-compact {
+        @apply w-full text-left border-collapse text-[11px];
+    }
+    .table-compact th {
+        @apply px-3 py-2.5 bg-slate-100/70 text-slate-600 font-extrabold text-[10px] uppercase tracking-wider border-b border-slate-200/80 whitespace-nowrap;
+    }
+    .table-compact td {
+        @apply px-3 py-2.5 text-slate-700 font-medium align-middle border-b border-slate-100;
+    }
+}
+
+
+/* ============================================================
+   UTILITIES LAYER — Custom utilities
+   ============================================================ */
+@layer utilities {
+    /* Text truncation */
+    .truncate-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Scrollbar hidden */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Grid auto-fit */
+    .grid-auto-fill-sm { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+    .grid-auto-fill-md { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    .grid-auto-fill-lg { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+
+    /* Custom Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes pulse-slow {
+        0%, 100% { opacity: 1; }
+        50% { opacity: .4; }
+    }
+}
+
